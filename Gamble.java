@@ -4,10 +4,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
+import javax.swing.tree.ExpandVetoException;
 
 public class Gamble {
     public static DrawingPanel frame = new DrawingPanel(800, 800);
@@ -32,10 +32,12 @@ public class Gamble {
     public static int highScore = 0;
     public static String name = "";
     public static int max = 100;
-    public static boolean skibidi = false;
-    public static boolean gyatt = false;
+    public static boolean check = false;
+    public static boolean ifEqual = false;
+    public static int police = 0;
+    public static int[] wantedPercent = { 0, 2, 7, 18, 32, 50 };
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws Exception {
         while (game) {
             if (played % 10 == 0 && played != 0) {
                 System.out.println("You have played " + played + " games get a life");
@@ -63,7 +65,7 @@ public class Gamble {
             g.setColor(Color.RED);
             g.setFont(font);
             turn = 0;
-            image = images.image[0];
+            image = images.tables[0];
             BufferedImage img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
             g.fillPolygon(xPoints, yPoints, 3);
@@ -91,7 +93,7 @@ public class Gamble {
 
     }
 
-    public static void highScore() throws IOException {
+    public static void highScore() throws Exception {
         System.out.println("Congrats, you have beaten the highscore! please write your name to be saved.");
         scr.nextLine();
         name = scr.nextLine();
@@ -100,7 +102,7 @@ public class Gamble {
         mrWriter.close();
     }
 
-    public static void winOrLoss() throws IOException, InterruptedException {
+    public static void winOrLoss() throws Exception {
         if (money <= 0) {
             System.out.println("You made $" + (money - 100) + "\nyou broke haha");
             played++;
@@ -117,7 +119,7 @@ public class Gamble {
         }
     }
 
-    public static void story() throws InterruptedException {
+    public static void story() throws Exception {
         System.out.println("You just got accepted to your dream school, Yale!");
         Thread.sleep(3000);
         System.out.println("Sadly your parents kicked you out of the house");
@@ -132,7 +134,7 @@ public class Gamble {
         Thread.sleep(3000);
     }
 
-    public static int logic() throws IOException, InterruptedException {
+    public static int logic() throws Exception {
         int num;
         boolean valid;
         boolean yes = false;
@@ -140,22 +142,26 @@ public class Gamble {
             turn++;
             System.out.print("\f");
             System.out.println("\fThe current highscore is $" + highScore + " and was made by " + name);
-            System.out.println("You have $" + money
-                    + "/$340,000 in your acct\nwhat do you want to bet\n1. 1 number\n2. 2 numbers\n3. 3 numbers\n4. 4 numbers\n5. 5 numbers\n6. 6 numbers\n7. 12 numbers\n8. 18 numbers\n9. all odd/even\n10. all red/black \nPlease enter the number that corresponds to your choice\nYou are on turn "
-                    + turn);
+            System.out.print("You have $" + money
+                    + "/$340,000 in your acct\nwhat do you want to bet\n1. 1 number\n2. 2 numbers\n3. 3 numbers\n4. 4 numbers\n5. 5 numbers\n6. 6 numbers\n7. 12 numbers\n8. 18 numbers\n9. all odd/even\n10. all red/black \n11. rob the homeless \nPlease enter the number that corresponds to your choice\nYou are on turn "
+                    + turn + "\nWanted lvl: ");
+            for (int i = 0; i < police; i++) {
+                System.out.print("* ");
+            }
+            System.out.println();
             num = scr.nextInt();
             valid = false;
             switch (num) {
                 case 1: {
                     System.out.println("What number? (0-36)");
                     int numbet = 0;
-                    skibidi = false;
-                    while (!skibidi) {
+                    check = false;
+                    while (!check) {
                         numbet = scr.nextInt();
                         if (numbet > 36 || numbet < 0) {
                             System.out.println("Not a valid number");
                         } else {
-                            skibidi = true;
+                            check = true;
                         }
                     }
                     int bet = 0;
@@ -193,7 +199,7 @@ public class Gamble {
                                 Thread.sleep(10);
                             }
                         }
-                        image = images.image[0];
+                        image = images.tables[0];
                         BufferedImage img = ImageIO.read(image);
                         g.drawImage(img, 0, 0, 800, 800, null);
                         g.setColor(Color.RED);
@@ -210,22 +216,22 @@ public class Gamble {
                     System.out.println("What numbers? (0-36)");
                     int[] numbet = new int[2];
                     for (int i = 0; i < numbet.length; i++) {
-                        skibidi = false;
-                        while (!skibidi) {
-                            gyatt = false;
+                        check = false;
+                        while (!check) {
+                            ifEqual = false;
                             numbet[i] = scr.nextInt();
                             if (numbet[i] > 36 || numbet[i] < 0) {
                                 System.out.println("Not a valid number");
                             } else {
                                 for (int j = 0; j < i; j++) {
                                     if (numbet[i] == numbet[j]) {
-                                        gyatt = true;
+                                        ifEqual = true;
                                     }
                                 }
-                                if (gyatt) {
+                                if (ifEqual) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    skibidi = true;
+                                    check = true;
                                 }
                             }
                         }
@@ -265,7 +271,7 @@ public class Gamble {
                                 Thread.sleep(10);
                             }
                         }
-                        image = images.image[0];
+                        image = images.tables[0];
                         BufferedImage img = ImageIO.read(image);
                         g.drawImage(img, 0, 0, 800, 800, null);
                         g.setColor(Color.RED);
@@ -282,22 +288,22 @@ public class Gamble {
                     System.out.println("What numbers? (0-36)");
                     int[] numbet = new int[3];
                     for (int i = 0; i < numbet.length; i++) {
-                        skibidi = false;
-                        while (!skibidi) {
-                            gyatt = false;
+                        check = false;
+                        while (!check) {
+                            ifEqual = false;
                             numbet[i] = scr.nextInt();
                             if (numbet[i] > 36 || numbet[i] < 0) {
                                 System.out.println("Not a valid number");
                             } else {
                                 for (int j = 0; j < i; j++) {
                                     if (numbet[i] == numbet[j]) {
-                                        gyatt = true;
+                                        ifEqual = true;
                                     }
                                 }
-                                if (gyatt) {
+                                if (ifEqual) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    skibidi = true;
+                                    check = true;
                                 }
                             }
                         }
@@ -337,7 +343,7 @@ public class Gamble {
                                 Thread.sleep(10);
                             }
                         }
-                        image = images.image[0];
+                        image = images.tables[0];
                         BufferedImage img = ImageIO.read(image);
                         g.drawImage(img, 0, 0, 800, 800, null);
                         g.setColor(Color.RED);
@@ -354,22 +360,22 @@ public class Gamble {
                     System.out.println("What numbers? (0-36)");
                     int[] numbet = new int[4];
                     for (int i = 0; i < numbet.length; i++) {
-                        skibidi = false;
-                        while (!skibidi) {
-                            gyatt = false;
+                        check = false;
+                        while (!check) {
+                            ifEqual = false;
                             numbet[i] = scr.nextInt();
                             if (numbet[i] > 36 || numbet[i] < 0) {
                                 System.out.println("Not a valid number");
                             } else {
                                 for (int j = 0; j < i; j++) {
                                     if (numbet[i] == numbet[j]) {
-                                        gyatt = true;
+                                        ifEqual = true;
                                     }
                                 }
-                                if (gyatt) {
+                                if (ifEqual) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    skibidi = true;
+                                    check = true;
                                 }
                             }
                         }
@@ -409,7 +415,7 @@ public class Gamble {
                                 Thread.sleep(10);
                             }
                         }
-                        image = images.image[0];
+                        image = images.tables[0];
                         BufferedImage img = ImageIO.read(image);
                         g.drawImage(img, 0, 0, 800, 800, null);
                         g.setColor(Color.RED);
@@ -426,22 +432,22 @@ public class Gamble {
                     System.out.println("What numbers? (0-36)");
                     int[] numbet = new int[5];
                     for (int i = 0; i < numbet.length; i++) {
-                        skibidi = false;
-                        while (!skibidi) {
-                            gyatt = false;
+                        check = false;
+                        while (!check) {
+                            ifEqual = false;
                             numbet[i] = scr.nextInt();
                             if (numbet[i] > 36 || numbet[i] < 0) {
                                 System.out.println("Not a valid number");
                             } else {
                                 for (int j = 0; j < i; j++) {
                                     if (numbet[i] == numbet[j]) {
-                                        gyatt = true;
+                                        ifEqual = true;
                                     }
                                 }
-                                if (gyatt) {
+                                if (ifEqual) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    skibidi = true;
+                                    check = true;
                                 }
                             }
                         }
@@ -482,7 +488,7 @@ public class Gamble {
                                 Thread.sleep(10);
                             }
                         }
-                        image = images.image[0];
+                        image = images.tables[0];
                         BufferedImage img = ImageIO.read(image);
                         g.drawImage(img, 0, 0, 800, 800, null);
                         g.setColor(Color.RED);
@@ -499,22 +505,22 @@ public class Gamble {
                     System.out.println("What numbers? (0-36)");
                     int[] numbet = new int[6];
                     for (int i = 0; i < numbet.length; i++) {
-                        skibidi = false;
-                        while (!skibidi) {
-                            gyatt = false;
+                        check = false;
+                        while (!check) {
+                            ifEqual = false;
                             numbet[i] = scr.nextInt();
                             if (numbet[i] > 36 || numbet[i] < 0) {
                                 System.out.println("Not a valid number");
                             } else {
                                 for (int j = 0; j < i; j++) {
                                     if (numbet[i] == numbet[j]) {
-                                        gyatt = true;
+                                        ifEqual = true;
                                     }
                                 }
-                                if (gyatt) {
+                                if (ifEqual) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    skibidi = true;
+                                    check = true;
                                 }
                             }
                         }
@@ -555,7 +561,7 @@ public class Gamble {
                                 Thread.sleep(10);
                             }
                         }
-                        image = images.image[0];
+                        image = images.tables[0];
                         BufferedImage img = ImageIO.read(image);
                         g.drawImage(img, 0, 0, 800, 800, null);
                         g.setColor(Color.RED);
@@ -572,22 +578,22 @@ public class Gamble {
                     System.out.println("What numbers? (0-36)");
                     int[] numbet = new int[12];
                     for (int i = 0; i < numbet.length; i++) {
-                        skibidi = false;
-                        while (!skibidi) {
-                            gyatt = false;
+                        check = false;
+                        while (!check) {
+                            ifEqual = false;
                             numbet[i] = scr.nextInt();
                             if (numbet[i] > 36 || numbet[i] < 0) {
                                 System.out.println("Not a valid number");
                             } else {
                                 for (int j = 0; j < i; j++) {
                                     if (numbet[i] == numbet[j]) {
-                                        gyatt = true;
+                                        ifEqual = true;
                                     }
                                 }
-                                if (gyatt) {
+                                if (ifEqual) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    skibidi = true;
+                                    check = true;
                                 }
                             }
                         }
@@ -629,7 +635,7 @@ public class Gamble {
                                 Thread.sleep(10);
                             }
                         }
-                        image = images.image[0];
+                        image = images.tables[0];
                         BufferedImage img = ImageIO.read(image);
                         g.drawImage(img, 0, 0, 800, 800, null);
                         g.setColor(Color.RED);
@@ -646,22 +652,22 @@ public class Gamble {
                     System.out.println("What numbers? (0-36)");
                     int[] numbet = new int[18];
                     for (int i = 0; i < numbet.length; i++) {
-                        skibidi = false;
-                        while (!skibidi) {
-                            gyatt = false;
+                        check = false;
+                        while (!check) {
+                            ifEqual = false;
                             numbet[i] = scr.nextInt();
                             if (numbet[i] > 36 || numbet[i] < 0) {
                                 System.out.println("Not a valid number");
                             } else {
                                 for (int j = 0; j < i; j++) {
                                     if (numbet[i] == numbet[j]) {
-                                        gyatt = true;
+                                        ifEqual = true;
                                     }
                                 }
-                                if (gyatt) {
+                                if (ifEqual) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    skibidi = true;
+                                    check = true;
                                 }
                             }
                         }
@@ -705,7 +711,7 @@ public class Gamble {
                                 Thread.sleep(10);
                             }
                         }
-                        image = images.image[0];
+                        image = images.tables[0];
                         BufferedImage img = ImageIO.read(image);
                         g.drawImage(img, 0, 0, 800, 800, null);
                         g.setColor(Color.RED);
@@ -721,11 +727,11 @@ public class Gamble {
                 case 9: {
                     System.out.println("press 1 for Even or press 2 for Odd");
                     int numbet = 0;
-                    skibidi = false;
-                    while (!skibidi) {
+                    check = false;
+                    while (!check) {
                         numbet = scr.nextInt();
                         if (numbet == 1 || numbet == 2) {
-                            skibidi = true;
+                            check = true;
                         } else {
                             System.out.println("Not a valid number");
                         }
@@ -766,7 +772,7 @@ public class Gamble {
                                     Thread.sleep(10);
                                 }
                             }
-                            image = images.image[0];
+                            image = images.tables[0];
                             BufferedImage img = ImageIO.read(image);
                             g.drawImage(img, 0, 0, 800, 800, null);
                             g.setColor(Color.RED);
@@ -803,7 +809,7 @@ public class Gamble {
                                     Thread.sleep(10);
                                 }
                             }
-                            image = images.image[0];
+                            image = images.tables[0];
                             BufferedImage img = ImageIO.read(image);
                             g.drawImage(img, 0, 0, 800, 800, null);
                             g.setColor(Color.RED);
@@ -816,11 +822,11 @@ public class Gamble {
                 case 10: {
                     System.out.println("press 1 for Red or press 2 for Black");
                     int numbet = 0;
-                    skibidi = false;
-                    while (!skibidi) {
+                    check = false;
+                    while (!check) {
                         numbet = scr.nextInt();
                         if (numbet == 1 || numbet == 2) {
-                            skibidi = true;
+                            check = true;
                         } else {
                             System.out.println("Not a valid number");
                         }
@@ -862,7 +868,7 @@ public class Gamble {
                                         Thread.sleep(10);
                                     }
                                 }
-                                image = images.image[0];
+                                image = images.tables[0];
                                 BufferedImage img = ImageIO.read(image);
                                 g.drawImage(img, 0, 0, 800, 800, null);
                                 g.setColor(Color.RED);
@@ -894,7 +900,7 @@ public class Gamble {
                                         Thread.sleep(10);
                                     }
                                 }
-                                image = images.image[0];
+                                image = images.tables[0];
                                 BufferedImage img = ImageIO.read(image);
                                 g.drawImage(img, 0, 0, 800, 800, null);
                                 g.setColor(Color.RED);
@@ -912,6 +918,10 @@ public class Gamble {
                     break;
                 }
                 case 11: {
+                    homeless();
+                    break;
+                }
+                case 12: {
                     System.out.println("What is the password");
                     scr.nextLine();
                     String password = scr.nextLine();
@@ -919,14 +929,14 @@ public class Gamble {
                         int rand = 8;
                         int count = imagenums[rand];
                         for (int i = 0; i < 360; i += 5) {
-                            image = images.image[i];
+                            image = images.tables[i];
                             BufferedImage img = ImageIO.read(image);
                             g.drawImage(img, 0, 0, 800, 800, null);
                             g.fillPolygon(xPoints, yPoints, 3);
                             Thread.sleep(2);
                         }
                         for (int i = 0; i < 360; i += 8) {
-                            image = images.image[i];
+                            image = images.tables[i];
                             BufferedImage img = ImageIO.read(image);
                             g.drawImage(img, 0, 0, 800, 800, null);
                             g.fillPolygon(xPoints, yPoints, 3);
@@ -934,9 +944,9 @@ public class Gamble {
                         }
                         for (int i = 0; i < 360; i += 8) {
                             if (count + i > 359) {
-                                image = images.image[(count + i) - 360];
+                                image = images.tables[(count + i) - 360];
                             } else {
-                                image = images.image[i + count];
+                                image = images.tables[i + count];
                             }
                             BufferedImage img = ImageIO.read(image);
                             g.drawImage(img, 0, 0, 800, 800, null);
@@ -945,9 +955,9 @@ public class Gamble {
                         }
                         for (int i = 0; i < 360; i += 8) {
                             if (count + i > 359) {
-                                image = images.image[(count + i) - 360];
+                                image = images.tables[(count + i) - 360];
                             } else {
-                                image = images.image[i + count];
+                                image = images.tables[i + count];
                             }
                             BufferedImage img = ImageIO.read(image);
                             g.drawImage(img, 0, 0, 800, 800, null);
@@ -956,9 +966,9 @@ public class Gamble {
                         }
                         for (int i = 0; i < 360; i += 5) {
                             if (count + i > 359) {
-                                image = images.image[(count + i) - 360];
+                                image = images.tables[(count + i) - 360];
                             } else {
-                                image = images.image[i + count];
+                                image = images.tables[i + count];
                             }
                             BufferedImage img = ImageIO.read(image);
                             g.drawImage(img, 0, 0, 800, 800, null);
@@ -967,9 +977,9 @@ public class Gamble {
                         }
                         for (int i = 0; i < 360; i += 3) {
                             if (count + i > 359) {
-                                image = images.image[(count + i) - 360];
+                                image = images.tables[(count + i) - 360];
                             } else {
-                                image = images.image[i + count];
+                                image = images.tables[i + count];
                             }
                             BufferedImage img = ImageIO.read(image);
                             g.drawImage(img, 0, 0, 800, 800, null);
@@ -978,9 +988,9 @@ public class Gamble {
                         }
                         for (int i = 0; i < 360; i++) {
                             if (count + i > 359) {
-                                image = images.image[(count + i) - 360];
+                                image = images.tables[(count + i) - 360];
                             } else {
-                                image = images.image[i + count];
+                                image = images.tables[i + count];
                             }
                             BufferedImage img = ImageIO.read(image);
                             g.drawImage(img, 0, 0, 800, 800, null);
@@ -1008,7 +1018,7 @@ public class Gamble {
                                 Thread.sleep(10);
                             }
                         }
-                        image = images.image[0];
+                        image = images.tables[0];
                         BufferedImage img = ImageIO.read(image);
                         g.drawImage(img, 0, 0, 800, 800, null);
                         g.setColor(Color.RED);
@@ -1044,20 +1054,20 @@ public class Gamble {
         return money;
     }
 
-    public static int spin() throws IOException, InterruptedException {
+    public static int spin() throws Exception {
         int rand = (int) (37 * Math.random());
         int count = imagenums[rand];
         for (int i = 0; i < 360; i += 8) {
-            image = images.image[i];
+            image = images.tables[i];
             BufferedImage img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
             g.fillPolygon(xPoints, yPoints, 3);
         }
         for (int i = 0; i < 360; i += 8) {
             if (count + i > 359) {
-                image = images.image[(count + i) - 360];
+                image = images.tables[(count + i) - 360];
             } else {
-                image = images.image[i + count];
+                image = images.tables[i + count];
             }
             BufferedImage img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
@@ -1065,9 +1075,9 @@ public class Gamble {
         }
         for (int i = 0; i < 180; i += 5) {
             if (count + i > 359) {
-                image = images.image[(count + i) - 360];
+                image = images.tables[(count + i) - 360];
             } else {
-                image = images.image[i + count];
+                image = images.tables[i + count];
             }
             BufferedImage img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
@@ -1076,9 +1086,9 @@ public class Gamble {
         }
         for (int i = 180; i < 270; i += 3) {
             if (count + i > 359) {
-                image = images.image[(count + i) - 360];
+                image = images.tables[(count + i) - 360];
             } else {
-                image = images.image[i + count];
+                image = images.tables[i + count];
             }
             BufferedImage img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
@@ -1087,9 +1097,9 @@ public class Gamble {
         }
         for (int i = 270; i < 360; i++) {
             if (count + i > 359) {
-                image = images.image[(count + i) - 360];
+                image = images.tables[(count + i) - 360];
             } else {
-                image = images.image[i + count];
+                image = images.tables[i + count];
             }
             BufferedImage img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
@@ -1097,5 +1107,73 @@ public class Gamble {
             Thread.sleep((int) (0 + ((i - 270) * 35.0 / 90)));
         }
         return rouletteNums[rand];
+    }
+
+    public static void homeless() throws Exception {
+        int rand = (int) (4 * Math.random() + 1);
+        if (rand == 1) {
+            image = images.homeless[0];
+            BufferedImage img = ImageIO.read(image);
+            g.drawImage(img, 0, 0, 800, 800, null);
+            Thread.sleep(3000);
+            image = images.homeless[2];
+            img = ImageIO.read(image);
+            g.drawImage(img, 0, 0, 800, 800, null);
+            Thread.sleep(3000);
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 2; j++) {
+                    switch (j) {
+                        case 0:
+                            g.setColor(Color.RED);
+                            break;
+                        case 1:
+                            g.setColor(Color.BLUE);
+                            break;
+                    }
+                    g.fillRect(0, 0, 800, 800);
+                    Thread.sleep(400);
+                }
+            }
+            image = images.tables[0];
+            img = ImageIO.read(image);
+            g.drawImage(img, 0, 0, 800, 800, null);
+            System.out.println("\fHow did you fail to rob a homeless man");
+            if (police < 5)
+                police++;
+            Thread.sleep(2000);
+        } else {
+            image = images.homeless[0];
+            BufferedImage img = ImageIO.read(image);
+            g.drawImage(img, 0, 0, 800, 800, null);
+            Thread.sleep(3000);
+            image = images.homeless[1];
+            img = ImageIO.read(image);
+            g.drawImage(img, 0, 0, 800, 800, null);
+            g.setColor(Color.BLACK);
+            g.drawString("+100", 107, 223);
+            money += 100;
+            Thread.sleep(3000);
+            rand = (int) (3 * Math.random() + 1);
+            if (rand == 1 && police < 5) {
+                police++;
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 2; j++) {
+                        switch (j) {
+                            case 0:
+                                g.setColor(Color.RED);
+                                break;
+                            case 1:
+                                g.setColor(Color.BLUE);
+                                break;
+                        }
+                        g.fillRect(0, 0, 800, 800);
+                        Thread.sleep(400);
+                    }
+                }
+            }
+            image = images.tables[0];
+            img = ImageIO.read(image);
+            g.drawImage(img, 0, 0, 800, 800, null);
+        }
     }
 }

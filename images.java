@@ -2,7 +2,7 @@ import java.io.File;
 
 class images {
 
-    public static File[] image = { new File("table/image (0).png"),
+    public static File[] tables = { new File("table/image (0).png"),
             new File("table/image (1).png"),
             new File("table/image (2).png"),
             new File("table/image (3).png"),
@@ -362,4 +362,6 @@ class images {
             new File("table/image (357).png"),
             new File("table/image (358).png"),
             new File("table/image (359).png"), };
+    public static File[] homeless = { new File("homeless/Homeless1.png"), new File("homeless/Homeless2.png"),
+            new File("homeless/Homeless3.png") };
 }
