@@ -1209,7 +1209,7 @@ public class Gamble {
         System.out.println("2. Behind the bar");
         System.out.println("3. Employee only area");
         System.out.println("4. Slot machine area");
-        frame.addKeyListener(new KeyAdapter() {
+        myJFrame.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
                 if (keyCode == KeyEvent.VK_1) {
@@ -1223,15 +1223,19 @@ public class Gamble {
                 }
             }
         });
-        frame.setVisible(true);
-        for (int i = 1; i <= 3000; i++) {
-            if (i % 1000 == 0) {
-                System.out.println(i + "...");
-            } else {
-                frame.setVisible(true);
+        myJFrame.setVisible(true);
+        ActionListener refresh = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                myJFrame.setVisible(true);
             }
-            Thread.sleep(1);
+        };
+        Timer timer = new Timer(100, refresh);
+        timer.start();
+        for (int i = 5; i >= 1; i--) {
+            System.out.println(i + "...");
+            Thread.sleep(1000);
         }
+        timer.stop();
         myJFrame.setVisible(false);
         myJFrame.dispose();
         switch (choice) {
@@ -1263,7 +1267,7 @@ public class Gamble {
                 break;
             }
             case 2: {
-                System.out.println("You decide to hide behind, the cops start looking for you...");
+                System.out.println("You decide to hide behind the bar, the cops start looking for you...");
                 Thread.sleep(3000);
                 int rand = (int) (2 * Math.random() + 1);
                 if (rand == 1) {
@@ -1318,7 +1322,6 @@ public class Gamble {
                 Thread.sleep(2000);
                 slotMachine();
             }
-                scr.nextLine();
         }
     }
 
