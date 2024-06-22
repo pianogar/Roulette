@@ -1116,10 +1116,17 @@ public class Gamble {
             BufferedImage img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
             Thread.sleep(3000);
+            AudioPlayer.filePath = "homeless/death.wav";
+            AudioPlayer audioPlayer = new AudioPlayer();
+            audioPlayer.play();
             image = images.homeless[2];
             img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
-            Thread.sleep(3000);
+            Thread.sleep(5000);
+            audioPlayer.stop();
+            AudioPlayer.filePath = "homeless/weewoo.wav";
+            audioPlayer = new AudioPlayer();
+            audioPlayer.play();
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 2; j++) {
                     switch (j) {
@@ -1131,9 +1138,10 @@ public class Gamble {
                             break;
                     }
                     g.fillRect(0, 0, 800, 800);
-                    Thread.sleep(400);
+                    Thread.sleep(648);
                 }
             }
+            audioPlayer.stop();
             image = images.tables[0];
             img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
@@ -1141,6 +1149,7 @@ public class Gamble {
             if (police < 5)
                 police++;
             Thread.sleep(2000);
+            g.setColor(Color.RED);
         } else {
             image = images.homeless[0];
             BufferedImage img = ImageIO.read(image);
@@ -1152,8 +1161,16 @@ public class Gamble {
             g.setColor(Color.BLACK);
             g.drawString("+100", 107, 223);
             money += 100;
-            Thread.sleep(3000);
+            AudioPlayer.filePath = "homeless/chaching.wav";
+            AudioPlayer audioPlayer = new AudioPlayer();
+            audioPlayer.play();
+            Thread.sleep(1000);
+            audioPlayer.stop();
+            Thread.sleep(2000);
             rand = (int) (3 * Math.random() + 1);
+            AudioPlayer.filePath = "homeless/weewoo.wav";
+            audioPlayer = new AudioPlayer();
+            audioPlayer.play();
             if (rand == 1 && police < 5) {
                 police++;
                 for (int i = 0; i < 4; i++) {
@@ -1167,13 +1184,15 @@ public class Gamble {
                                 break;
                         }
                         g.fillRect(0, 0, 800, 800);
-                        Thread.sleep(400);
+                        Thread.sleep(648);
                     }
                 }
             }
+            audioPlayer.stop();
             image = images.tables[0];
             img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
+            g.setColor(Color.RED);
         }
     }
 }

@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -27,5 +26,18 @@ public class AudioPlayer {
         // open audioInputStream to the clip
         clip.open(audioInputStream);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+    public void play() {
+        // start the clip
+        clip.start();
+        status = "play";
+    }
+
+    public void stop() throws UnsupportedAudioFileException,
+            IOException, LineUnavailableException {
+        currentFrame = 0L;
+        clip.stop();
+        clip.close();
     }
 }
