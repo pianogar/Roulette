@@ -5,9 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
-
+import javax.swing.*;
+import java.awt.event.*;
 import javax.imageio.ImageIO;
-import javax.swing.tree.ExpandVetoException;
 
 public class Gamble {
     public static DrawingPanel frame = new DrawingPanel(800, 800);
@@ -36,6 +36,7 @@ public class Gamble {
     public static boolean ifEqual = false;
     public static int police = 0;
     public static int[] wantedPercent = { 0, 2, 7, 18, 32, 50 };
+    public static JFrame myJFrame = new JFrame();
 
     public static void main(String[] args) throws Exception {
         while (game) {
@@ -88,7 +89,7 @@ public class Gamble {
             System.out.println("Would you like to try again?\n(1 for yes, 2 for no)");
             play = scr.nextInt();
             if (play == 2)
-                game = false;
+                System.exit(0);
         }
 
     }
@@ -1050,6 +1051,9 @@ public class Gamble {
                 }
             }
             max = Math.max(money, max);
+            int policeEvent = (int) (100 * Math.random() + 1);
+            if (policeEvent <= wantedPercent[police])
+                policeEvent();
         }
         return money;
     }
@@ -1194,5 +1198,131 @@ public class Gamble {
             g.drawImage(img, 0, 0, 800, 800, null);
             g.setColor(Color.RED);
         }
+    }
+
+    public static int choice = 0;
+
+    public static void policeEvent() throws Exception {
+        System.out.println("Quick! The cops are coming into the store, where will you hide?");
+        Thread.sleep(1000);
+        System.out.println("1. Under the table");
+        System.out.println("2. Behind the bar");
+        System.out.println("3. Employee only area");
+        System.out.println("4. Slot machine area");
+        frame.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                if (keyCode == KeyEvent.VK_1) {
+                    choice = 1;
+                } else if (keyCode == KeyEvent.VK_2) {
+                    choice = 2;
+                } else if (keyCode == KeyEvent.VK_3) {
+                    choice = 3;
+                } else if (keyCode == KeyEvent.VK_4) {
+                    choice = 4;
+                }
+            }
+        });
+        frame.setVisible(true);
+        for (int i = 1; i <= 3000; i++) {
+            if (i % 1000 == 0) {
+                System.out.println(i + "...");
+            } else {
+                frame.setVisible(true);
+            }
+            Thread.sleep(1);
+        }
+        myJFrame.setVisible(false);
+        myJFrame.dispose();
+        switch (choice) {
+            case 0: {
+                System.out.println("You were too slow, and the cops caught you.");
+                Thread.sleep(2000);
+                System.out.println("guess your not going to college");
+                Thread.sleep(2000);
+                money = 0;
+                break;
+            }
+            case 1: {
+                System.out.println("You decide to hide under the table, the cops start looking for you...");
+                Thread.sleep(3000);
+                int rand = (int) (4 * Math.random() + 1);
+                if (rand > 1) {
+                    System.out.println("The cops found you.");
+                    Thread.sleep(2000);
+                    System.out.println("guess your not going to college");
+                    Thread.sleep(2000);
+                    money = 0;
+                    break;
+                }
+                System.out.println("The cops didn't find you!");
+                Thread.sleep(2000);
+                System.out.println("Have fun gambling!");
+                Thread.sleep(2000);
+                police = 0;
+                break;
+            }
+            case 2: {
+                System.out.println("You decide to hide behind, the cops start looking for you...");
+                Thread.sleep(3000);
+                int rand = (int) (2 * Math.random() + 1);
+                if (rand == 1) {
+                    System.out.println("The cops found you.");
+                    Thread.sleep(2000);
+                    System.out.println("guess your not going to college");
+                    Thread.sleep(2000);
+                    money = 0;
+                    break;
+                }
+                System.out.println("The cops didn't find you!");
+                Thread.sleep(2000);
+                System.out.println("Have fun gambling!");
+                Thread.sleep(2000);
+                police = 0;
+                break;
+            }
+            case 3: {
+                int rand1 = (int) (10 * Math.random() + 1);
+                if (rand1 <= 6) {
+                    System.out.println("The door is locked,");
+                    Thread.sleep(2000);
+                    System.out.println("The cops found you.");
+                    Thread.sleep(2000);
+                    System.out.println("guess your not going to college");
+                    Thread.sleep(2000);
+                    money = 0;
+                    break;
+                }
+                System.out.println("The door is unlocked, and you get inside...");
+                Thread.sleep(3000);
+                int rand2 = (int) (100 * Math.random() + 1);
+                if (rand2 <= 5) {
+                    System.out.println("The cops found you.");
+                    Thread.sleep(2000);
+                    System.out.println("guess your not going to college");
+                    Thread.sleep(2000);
+                    money = 0;
+                    break;
+                }
+                System.out.println("The cops didn't find you!");
+                Thread.sleep(2000);
+                System.out.println("Have fun gambling!");
+                Thread.sleep(2000);
+                police = 0;
+                break;
+            }
+            case 4: {
+                System.out.println("You decide to disguise youself as an old man,");
+                Thread.sleep(2000);
+                System.out.println("But you get a bit distraced while waiting...");
+                Thread.sleep(2000);
+                slotMachine();
+            }
+                scr.nextLine();
+        }
+    }
+
+    public static void slotMachine() {
+        System.out.println("WIP");
     }
 }
