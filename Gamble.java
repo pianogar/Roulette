@@ -1316,7 +1316,7 @@ public class Gamble {
                 break;
             }
             case 4: {
-                System.out.println("You decide to disguise youself as an old man,");
+                System.out.println("You decide to disguise youself as an old man in the slot machines,");
                 Thread.sleep(2000);
                 System.out.println("But you get a bit distraced while waiting...");
                 Thread.sleep(2000);
@@ -1325,7 +1325,82 @@ public class Gamble {
         }
     }
 
-    public static void slotMachine() {
-        System.out.println("WIP");
+    public static void slotMachine() throws Exception {
+        while (money > 0 && money < 340000) {
+            boolean spin = true;
+            boolean betTrue = false;
+            System.out.println("You have $" + money + "/$340,000 in your acct");
+            while (spin) {
+                System.out.println("press 1 to spin again");
+                int num = scr.nextInt();
+                if (num == 1) {
+                    spin = false;
+                }
+            }
+            int bet = 0;
+            while (!betTrue) {
+                System.out.println("How much money");
+                bet = scr.nextInt();
+                if (money - bet < 0) {
+                    System.out.println("You can't get a loan you don't have a credit score");
+                } else if (bet < 0) {
+                    System.out.println("You don't have negative money");
+                } else {
+                    betTrue = true;
+                }
+            }
+            money = money - bet;
+            image = images.slots[0];
+            BufferedImage img = ImageIO.read(image);
+            g.drawImage(img, 0, 0, 800, 800, null);
+            int rand1 = (int) (4 * Math.random());
+            int rand2 = (int) (4 * Math.random());
+            int rand3 = (int) (4 * Math.random());
+            if (rand1 == rand2 && rand2 == rand3) {
+                money = money + (bet * 100);
+            } else if (rand1 == rand2) {
+                money = money + (bet * 50);
+            } else if (rand2 == rand3) {
+                money = money + (bet * 50);
+            } else if (rand1 == rand3) {
+                money = money + (bet * 50);
+            }
+            for (int j = 1; j <= 21 + rand1; j++) {
+                int k = 0;
+                if (j % 4 == 0) {
+                    k = 4;
+                } else {
+                    k = j % 4;
+                }
+                image = images.slots[k];
+                img = ImageIO.read(image);
+                g.drawImage(img, 16, 278, 244, 244, null);
+                Thread.sleep(100);
+            }
+            for (int j = 1; j <= 21 + rand2; j++) {
+                int k = 0;
+                if (j % 4 == 0) {
+                    k = 4;
+                } else {
+                    k = j % 4;
+                }
+                image = images.slots[k];
+                img = ImageIO.read(image);
+                g.drawImage(img, 278, 278, 244, 244, null);
+                Thread.sleep(100);
+            }
+            for (int j = 1; j <= 21 + rand3; j++) {
+                int k = 0;
+                if (j % 4 == 0) {
+                    k = 4;
+                } else {
+                    k = j % 4;
+                }
+                image = images.slots[k];
+                img = ImageIO.read(image);
+                g.drawImage(img, 539, 278, 244, 244, null);
+                Thread.sleep(100);
+            }
+        }
     }
 }

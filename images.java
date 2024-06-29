@@ -364,4 +364,6 @@ class images {
                         new File("table/image (359).png"), };
         public static File[] homeless = { new File("homeless/Homeless1.png"), new File("homeless/Homeless2.png"),
                         new File("homeless/Homeless3.png") };
+        public static File[] slots = { new File("slots/slotsFrame.png"), new File("slots/7.png"),
+                        new File("slots/coin.png"), new File("slots/dollarSign.png"), new File("slots/money.png") };
 }
