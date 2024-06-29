@@ -1321,11 +1321,20 @@ public class Gamble {
                 System.out.println("But you get a bit distraced while waiting...");
                 Thread.sleep(2000);
                 slotMachine();
+                System.out.println("You have $" + money);
+                Thread.sleep(2000);
+                System.out.println("But, the cops found you.");
+                Thread.sleep(2000);
+                System.out.println("guess your not going to college");
+                Thread.sleep(2000);
+                money = 0;
             }
         }
     }
 
     public static void slotMachine() throws Exception {
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 800, 800);
         while (money > 0 && money < 340000) {
             boolean spin = true;
             boolean betTrue = false;
