@@ -70,6 +70,7 @@ public class Gamble {
             BufferedImage img = ImageIO.read(image);
             g.drawImage(img, 0, 0, 800, 800, null);
             g.fillPolygon(xPoints, yPoints, 3);
+            police = 0;
             if (played > 0) {
                 if (played == 1) {
                     System.out.println("You have played " + played + " time");
@@ -1203,6 +1204,7 @@ public class Gamble {
     public static int choice = 0;
 
     public static void policeEvent() throws Exception {
+        choice = 0;
         System.out.println("Quick! The cops are coming into the store, where will you hide?");
         Thread.sleep(1000);
         System.out.println("1. Under the table");
