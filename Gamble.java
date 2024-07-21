@@ -37,6 +37,7 @@ public class Gamble {
     public static int police = 0;
     public static int[] wantedPercent = { 0, 2, 7, 18, 32, 50 };
     public static JFrame myJFrame = new JFrame();
+    public static boolean tryCatch = false;
 
     public static void main(String[] args) throws Exception {
         while (game) {
@@ -137,7 +138,7 @@ public class Gamble {
     }
 
     public static int logic() throws Exception {
-        int num;
+        int num = 0;
         boolean valid;
         boolean yes = false;
         while (money > 0 && money < 340000) {
@@ -151,7 +152,15 @@ public class Gamble {
                 System.out.print("* ");
             }
             System.out.println();
-            num = scr.nextInt();
+            while (!tryCatch) {
+                try {
+                    num = scr.nextInt();
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Not Valid");
+                    scr.nextLine();
+                }
+            }
             valid = false;
             switch (num) {
                 case 1: {
@@ -159,23 +168,33 @@ public class Gamble {
                     int numbet = 0;
                     check = false;
                     while (!check) {
-                        numbet = scr.nextInt();
-                        if (numbet > 36 || numbet < 0) {
-                            System.out.println("Not a valid number");
-                        } else {
-                            check = true;
+                        try {
+                            numbet = scr.nextInt();
+                            if (numbet > 36 || numbet < 0) {
+                                System.out.println("Not a valid number");
+                            } else {
+                                check = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -220,34 +239,44 @@ public class Gamble {
                     for (int i = 0; i < numbet.length; i++) {
                         check = false;
                         while (!check) {
-                            ifEqual = false;
-                            numbet[i] = scr.nextInt();
-                            if (numbet[i] > 36 || numbet[i] < 0) {
-                                System.out.println("Not a valid number");
-                            } else {
-                                for (int j = 0; j < i; j++) {
-                                    if (numbet[i] == numbet[j]) {
-                                        ifEqual = true;
-                                    }
-                                }
-                                if (ifEqual) {
+                            try {
+                                ifEqual = false;
+                                numbet[i] = scr.nextInt();
+                                if (numbet[i] > 36 || numbet[i] < 0) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    check = true;
+                                    for (int j = 0; j < i; j++) {
+                                        if (numbet[i] == numbet[j]) {
+                                            ifEqual = true;
+                                        }
+                                    }
+                                    if (ifEqual) {
+                                        System.out.println("Not a valid number");
+                                    } else {
+                                        check = true;
+                                    }
                                 }
+                            } catch (Exception e) {
+                                System.out.println("Not Valid");
+                                scr.nextLine();
                             }
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -292,34 +321,44 @@ public class Gamble {
                     for (int i = 0; i < numbet.length; i++) {
                         check = false;
                         while (!check) {
-                            ifEqual = false;
-                            numbet[i] = scr.nextInt();
-                            if (numbet[i] > 36 || numbet[i] < 0) {
-                                System.out.println("Not a valid number");
-                            } else {
-                                for (int j = 0; j < i; j++) {
-                                    if (numbet[i] == numbet[j]) {
-                                        ifEqual = true;
-                                    }
-                                }
-                                if (ifEqual) {
+                            try {
+                                ifEqual = false;
+                                numbet[i] = scr.nextInt();
+                                if (numbet[i] > 36 || numbet[i] < 0) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    check = true;
+                                    for (int j = 0; j < i; j++) {
+                                        if (numbet[i] == numbet[j]) {
+                                            ifEqual = true;
+                                        }
+                                    }
+                                    if (ifEqual) {
+                                        System.out.println("Not a valid number");
+                                    } else {
+                                        check = true;
+                                    }
                                 }
+                            } catch (Exception e) {
+                                System.out.println("Not Valid");
+                                scr.nextLine();
                             }
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -364,34 +403,44 @@ public class Gamble {
                     for (int i = 0; i < numbet.length; i++) {
                         check = false;
                         while (!check) {
-                            ifEqual = false;
-                            numbet[i] = scr.nextInt();
-                            if (numbet[i] > 36 || numbet[i] < 0) {
-                                System.out.println("Not a valid number");
-                            } else {
-                                for (int j = 0; j < i; j++) {
-                                    if (numbet[i] == numbet[j]) {
-                                        ifEqual = true;
-                                    }
-                                }
-                                if (ifEqual) {
+                            try {
+                                ifEqual = false;
+                                numbet[i] = scr.nextInt();
+                                if (numbet[i] > 36 || numbet[i] < 0) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    check = true;
+                                    for (int j = 0; j < i; j++) {
+                                        if (numbet[i] == numbet[j]) {
+                                            ifEqual = true;
+                                        }
+                                    }
+                                    if (ifEqual) {
+                                        System.out.println("Not a valid number");
+                                    } else {
+                                        check = true;
+                                    }
                                 }
+                            } catch (Exception e) {
+                                System.out.println("Not Valid");
+                                scr.nextLine();
                             }
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -436,34 +485,44 @@ public class Gamble {
                     for (int i = 0; i < numbet.length; i++) {
                         check = false;
                         while (!check) {
-                            ifEqual = false;
-                            numbet[i] = scr.nextInt();
-                            if (numbet[i] > 36 || numbet[i] < 0) {
-                                System.out.println("Not a valid number");
-                            } else {
-                                for (int j = 0; j < i; j++) {
-                                    if (numbet[i] == numbet[j]) {
-                                        ifEqual = true;
-                                    }
-                                }
-                                if (ifEqual) {
+                            try {
+                                ifEqual = false;
+                                numbet[i] = scr.nextInt();
+                                if (numbet[i] > 36 || numbet[i] < 0) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    check = true;
+                                    for (int j = 0; j < i; j++) {
+                                        if (numbet[i] == numbet[j]) {
+                                            ifEqual = true;
+                                        }
+                                    }
+                                    if (ifEqual) {
+                                        System.out.println("Not a valid number");
+                                    } else {
+                                        check = true;
+                                    }
                                 }
+                            } catch (Exception e) {
+                                System.out.println("Not Valid");
+                                scr.nextLine();
                             }
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -509,34 +568,44 @@ public class Gamble {
                     for (int i = 0; i < numbet.length; i++) {
                         check = false;
                         while (!check) {
-                            ifEqual = false;
-                            numbet[i] = scr.nextInt();
-                            if (numbet[i] > 36 || numbet[i] < 0) {
-                                System.out.println("Not a valid number");
-                            } else {
-                                for (int j = 0; j < i; j++) {
-                                    if (numbet[i] == numbet[j]) {
-                                        ifEqual = true;
-                                    }
-                                }
-                                if (ifEqual) {
+                            try {
+                                ifEqual = false;
+                                numbet[i] = scr.nextInt();
+                                if (numbet[i] > 36 || numbet[i] < 0) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    check = true;
+                                    for (int j = 0; j < i; j++) {
+                                        if (numbet[i] == numbet[j]) {
+                                            ifEqual = true;
+                                        }
+                                    }
+                                    if (ifEqual) {
+                                        System.out.println("Not a valid number");
+                                    } else {
+                                        check = true;
+                                    }
                                 }
+                            } catch (Exception e) {
+                                System.out.println("Not Valid");
+                                scr.nextLine();
                             }
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -582,34 +651,44 @@ public class Gamble {
                     for (int i = 0; i < numbet.length; i++) {
                         check = false;
                         while (!check) {
-                            ifEqual = false;
-                            numbet[i] = scr.nextInt();
-                            if (numbet[i] > 36 || numbet[i] < 0) {
-                                System.out.println("Not a valid number");
-                            } else {
-                                for (int j = 0; j < i; j++) {
-                                    if (numbet[i] == numbet[j]) {
-                                        ifEqual = true;
-                                    }
-                                }
-                                if (ifEqual) {
+                            try {
+                                ifEqual = false;
+                                numbet[i] = scr.nextInt();
+                                if (numbet[i] > 36 || numbet[i] < 0) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    check = true;
+                                    for (int j = 0; j < i; j++) {
+                                        if (numbet[i] == numbet[j]) {
+                                            ifEqual = true;
+                                        }
+                                    }
+                                    if (ifEqual) {
+                                        System.out.println("Not a valid number");
+                                    } else {
+                                        check = true;
+                                    }
                                 }
+                            } catch (Exception e) {
+                                System.out.println("Not Valid");
+                                scr.nextLine();
                             }
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -656,34 +735,44 @@ public class Gamble {
                     for (int i = 0; i < numbet.length; i++) {
                         check = false;
                         while (!check) {
-                            ifEqual = false;
-                            numbet[i] = scr.nextInt();
-                            if (numbet[i] > 36 || numbet[i] < 0) {
-                                System.out.println("Not a valid number");
-                            } else {
-                                for (int j = 0; j < i; j++) {
-                                    if (numbet[i] == numbet[j]) {
-                                        ifEqual = true;
-                                    }
-                                }
-                                if (ifEqual) {
+                            try {
+                                ifEqual = false;
+                                numbet[i] = scr.nextInt();
+                                if (numbet[i] > 36 || numbet[i] < 0) {
                                     System.out.println("Not a valid number");
                                 } else {
-                                    check = true;
+                                    for (int j = 0; j < i; j++) {
+                                        if (numbet[i] == numbet[j]) {
+                                            ifEqual = true;
+                                        }
+                                    }
+                                    if (ifEqual) {
+                                        System.out.println("Not a valid number");
+                                    } else {
+                                        check = true;
+                                    }
                                 }
+                            } catch (Exception e) {
+                                System.out.println("Not Valid");
+                                scr.nextLine();
                             }
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -731,23 +820,33 @@ public class Gamble {
                     int numbet = 0;
                     check = false;
                     while (!check) {
-                        numbet = scr.nextInt();
-                        if (numbet == 1 || numbet == 2) {
-                            check = true;
-                        } else {
-                            System.out.println("Not a valid number");
+                        try {
+                            numbet = scr.nextInt();
+                            if (numbet == 1 || numbet == 2) {
+                                check = true;
+                            } else {
+                                System.out.println("Not a valid number");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -826,23 +925,32 @@ public class Gamble {
                     int numbet = 0;
                     check = false;
                     while (!check) {
-                        numbet = scr.nextInt();
-                        if (numbet == 1 || numbet == 2) {
-                            check = true;
-                        } else {
-                            System.out.println("Not a valid number");
+                        try {
+                            numbet = scr.nextInt();
+                            if (numbet == 1 || numbet == 2) {
+                                check = true;
+                            } else {
+                                System.out.println("Not a valid number");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
                         }
                     }
                     int bet = 0;
                     while (!valid) {
-                        System.out.println("How much money");
-                        bet = scr.nextInt();
-                        if (money - bet < 0) {
-                            System.out.println("You can't get a loan you don't have a credit score");
-                        } else if (bet < 0) {
-                            System.out.println("You don't have negative money");
-                        } else {
-                            valid = true;
+                        try {
+                            System.out.println("How much money");
+                            bet = scr.nextInt();
+                            if (money - bet < 0) {
+                                System.out.println("You can't get a loan you don't have a credit score");
+                            } else if (bet < 0) {
+                                System.out.println("You don't have negative money");
+                            } else {
+                                valid = true;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not Valid");
+                            scr.nextLine();
                         }
                     }
                     money = money - bet;
@@ -1342,22 +1450,32 @@ public class Gamble {
             boolean betTrue = false;
             System.out.println("You have $" + money + "/$340,000 in your acct");
             while (spin) {
-                System.out.println("press 1 to spin again");
-                int num = scr.nextInt();
-                if (num == 1) {
-                    spin = false;
+                try {
+                    System.out.println("press 1 to spin again");
+                    int num = scr.nextInt();
+                    if (num == 1) {
+                        spin = false;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Not Valid");
+                    scr.nextLine();
                 }
             }
             int bet = 0;
             while (!betTrue) {
-                System.out.println("How much money");
-                bet = scr.nextInt();
-                if (money - bet < 0) {
-                    System.out.println("You can't get a loan you don't have a credit score");
-                } else if (bet < 0) {
-                    System.out.println("You don't have negative money");
-                } else {
-                    betTrue = true;
+                try {
+                    System.out.println("How much money");
+                    bet = scr.nextInt();
+                    if (money - bet < 0) {
+                        System.out.println("You can't get a loan you don't have a credit score");
+                    } else if (bet < 0) {
+                        System.out.println("You don't have negative money");
+                    } else {
+                        betTrue = true;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Not Valid");
+                    scr.nextLine();
                 }
             }
             money = money - bet;
